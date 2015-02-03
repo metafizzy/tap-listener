@@ -1,0 +1,31 @@
+{
+  "name": "tap-listener",
+  "version": "0.1.0",
+  "description": "Listens to taps",
+  "main": "tap-listener.js",
+  "dependencies": {
+    "unipointer": "~0.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/metafizzy/tap-listener.git"
+  },
+  "keywords": [
+    "tap",
+    "touch",
+    "click",
+    "event",
+    "browser",
+    "DOM"
+  ],
+  "author": "David DeSandro",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/metafizzy/tap-listener/issues"
+  },
+  "homepage": "https://github.com/metafizzy/tap-listener"
+}
