@@ -1,5 +1,5 @@
 /*!
- * Tap listener v0.1.0
+ * Tap listener v1.0.0
  * listens to taps
  * MIT license
  */

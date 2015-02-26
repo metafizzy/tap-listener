@@ -1,10 +1,10 @@
 {
   "name": "tap-listener",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Listens to taps",
   "main": "tap-listener.js",
   "dependencies": {
-    "unipointer": "~0.1.0"
+    "unipointer": "~1.0.0"
   },
   "devDependencies": {},
   "scripts": {
