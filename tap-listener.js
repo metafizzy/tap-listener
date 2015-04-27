@@ -1,5 +1,5 @@
 /*!
- * Tap listener v1.0.0
+ * Tap listener v1.1.0
  * listens to taps
  * MIT license
  */
@@ -85,7 +85,7 @@ TapListener.prototype.pointerUp = function( event, pointer ) {
     pointerPoint.y <= boundingRect.bottom + scrollY;
   // trigger callback if pointer is inside element
   if ( isInside ) {
-    this.emitEvent( 'tap', [ this, event, pointer ] );
+    this.emitEvent( 'tap', [ event, pointer ] );
   }
 };
 

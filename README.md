@@ -65,8 +65,7 @@ tapper.on( eventName, callback )
 // eventName {String} - tap, pointerDown, pointerMove, pointerUp, pointerCancel
 // callback {Function}
 
-function callback( instance, event, pointer ) {...}
-// instance {TapListener}
+function callback( event, pointer ) {...}
 // event {Event} - the original mouseup, touchend, or pointerup event
 // pointer {Event} or {Touch} - event object with pageX and pageY
 
