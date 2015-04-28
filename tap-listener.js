@@ -1,5 +1,5 @@
 /*!
- * Tap listener v1.1.0
+ * Tap listener v1.1.1
  * listens to taps
  * MIT license
  */
@@ -36,6 +36,15 @@
 
 'use strict';
 
+// handle IE8 prevent default
+function preventDefaultEvent( event ) {
+  if ( event.preventDefault ) {
+    event.preventDefault();
+  } else {
+    event.returnValue = false;
+  }
+}
+
 // --------------------------  TapListener -------------------------- //
 
 function TapListener( elem ) {
@@ -64,6 +73,16 @@ TapListener.prototype.unbindTap = function() {
   }
   this._bindStartEvent( this.tapElement, true );
   delete this.tapElement;
+};
+
+var pointerDown = TapListener.prototype.pointerDown;
+
+TapListener.prototype.pointerDown = function( event ) {
+  // prevent default event for touch, disables tap then click
+  if ( event.type == 'touchstart' ) {
+    preventDefaultEvent( event );
+  }
+  pointerDown.apply( this, arguments );
 };
 
 var isPageOffset = window.pageYOffset !== undefined;
