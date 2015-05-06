@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>xxx</title>
+  <style>
+    .destroyed{
+      background-color: gray !important;
+    }
+    #jquery,
+    #vanilla{
+      display: inline-block;
+      overflow: hidden;
+      position: relative;
+      background-color: red;
+      color: white;
+      width: 100px;
+      height: 100px;
+      margin-right: 10px;
+      text-align: center;
+      line-height: 100px;
+      cursor: pointer;
+    }
+    #jquery{
+      background-color: blue;
+    }
+  </style>
+</head>
+<body>
+  <h1>Example</h1>
+  <p>Open the console to see the outputs.</p>
+  <p>In 3 seconds the events are destroyed</p>
+  <div id="vanilla">Vanilla - Tap</div>
+  <div id="jquery">jQuery - Tap</div>
+  <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script src="../bower_components/eventEmitter/eventEmitter.js"></script>
+  <script src="../bower_components/eventie/eventie.js"></script>
+  <script src="../bower_components/unipointer/unipointer.js"></script>
+  <script src="../tap-listener.js"></script>
+  <script src="../jquery-tap-listener.js"></script>
+  <script>
+    // jQuery
+    var $jquery = $('#jquery');
+    $jquery.on('tap.jquery', function(event){
+      console.log(event.type);
+    });
+
+    // Vanilla
+    var vanilla = document.querySelector('#vanilla');
+    tapper = new TapListener(vanilla);
+    tapper.on('tap', function(event){
+      console.log(event.type);
+    });
+
+    // Destroy both
+    setTimeout(function(){
+      $jquery.off('.jquery');
+      tapper.destroy();
+
+      $jquery.addClass('destroyed');
+      vanilla.classList.add('destroyed');
+    }, 3000);
+
+  </script>
+</body>
+</html>

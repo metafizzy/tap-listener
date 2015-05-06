@@ -71,7 +71,7 @@ TapListener.prototype.unbindTap = function() {
   if ( !this.tapElement ) {
     return;
   }
-  this._bindStartEvent( this.tapElement, true );
+  this._bindStartEvent( this.tapElement, false );
   delete this.tapElement;
 };
 
@@ -92,6 +92,9 @@ var isPageOffset = window.pageYOffset !== undefined;
  * @param {Event or Touch} pointer
  */
 TapListener.prototype.pointerUp = function( event, pointer ) {
+  if ( !this.tapElement ) {
+    return;
+  }
   var pointerPoint = Unipointer.getPointerPoint( pointer );
   var boundingRect = this.tapElement.getBoundingClientRect();
   // standard or IE8 scroll positions

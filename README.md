@@ -73,6 +73,10 @@ tapper.destroy()
 // unbinds tap events
 ```
 
+## jQuery Support
+
+Should you wish to use tap-listener.js with jQuery, there is an optional jQuery wrapper that you can include in your project.
+
 ---
 
 MIT license
