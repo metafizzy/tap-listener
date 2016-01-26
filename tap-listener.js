@@ -1,5 +1,5 @@
 /*!
- * Tap listener v1.1.1
+ * Tap listener v1.1.2
  * listens to taps
  * MIT license
  */
@@ -7,9 +7,8 @@
 /*jshint browser: true, unused: true, undef: true, strict: true */
 
 ( function( window, factory ) {
-  /*global define: false, module: false, require: false */
-  'use strict';
   // universal module definition
+  /*jshint strict: false*/ /*globals define, module, require */
 
   if ( typeof define == 'function' && define.amd ) {
     // AMD
@@ -35,15 +34,6 @@
 }( window, function factory( window, Unipointer ) {
 
 'use strict';
-
-// handle IE8 prevent default
-function preventDefaultEvent( event ) {
-  if ( event.preventDefault ) {
-    event.preventDefault();
-  } else {
-    event.returnValue = false;
-  }
-}
 
 // --------------------------  TapListener -------------------------- //
 
@@ -75,16 +65,6 @@ TapListener.prototype.unbindTap = function() {
   delete this.tapElement;
 };
 
-var pointerDown = TapListener.prototype.pointerDown;
-
-TapListener.prototype.pointerDown = function( event ) {
-  // prevent default event for touch, disables tap then click
-  if ( event.type == 'touchstart' ) {
-    preventDefaultEvent( event );
-  }
-  pointerDown.apply( this, arguments );
-};
-
 var isPageOffset = window.pageYOffset !== undefined;
 /**
  * pointer up
@@ -92,6 +72,11 @@ var isPageOffset = window.pageYOffset !== undefined;
  * @param {Event or Touch} pointer
  */
 TapListener.prototype.pointerUp = function( event, pointer ) {
+  // ignore emulated mouse up clicks
+  if ( this.isIgnoringMouseUp && event.type == 'mouseup' ) {
+    return;
+  }
+
   var pointerPoint = Unipointer.getPointerPoint( pointer );
   var boundingRect = this.tapElement.getBoundingClientRect();
   // standard or IE8 scroll positions
@@ -105,6 +90,15 @@ TapListener.prototype.pointerUp = function( event, pointer ) {
   // trigger callback if pointer is inside element
   if ( isInside ) {
     this.emitEvent( 'tap', [ event, pointer ] );
+  }
+
+  // set flag for emulated clicks 300ms after touchend
+  if ( event.type != 'mouseup' ) {
+    this.isIgnoringMouseUp = true;
+    // reset flag after 300ms
+    setTimeout( function() {
+      delete this.isIgnoringMouseUp;
+    }.bind( this ), 320 );
   }
 };
 
