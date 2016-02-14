@@ -1,5 +1,5 @@
 /*!
- * Tap listener v1.1.2
+ * Tap listener v2.0.0
  * listens to taps
  * MIT license
  */
@@ -17,7 +17,7 @@
     ], function( Unipointer ) {
       return factory( window, Unipointer );
     });
-  } else if ( typeof exports == 'object' ) {
+  } else if ( typeof module == 'object' && module.exports ) {
     // CommonJS
     module.exports = factory(
       window,
@@ -42,13 +42,13 @@ function TapListener( elem ) {
 }
 
 // inherit Unipointer & EventEmitter
-TapListener.prototype = new Unipointer();
+var proto = TapListener.prototype = Object.create( Unipointer.prototype );
 
 /**
  * bind tap event to element
  * @param {Element} elem
  */
-TapListener.prototype.bindTap = function( elem ) {
+proto.bindTap = function( elem ) {
   if ( !elem ) {
     return;
   }
@@ -57,7 +57,7 @@ TapListener.prototype.bindTap = function( elem ) {
   this._bindStartEvent( elem, true );
 };
 
-TapListener.prototype.unbindTap = function() {
+proto.unbindTap = function() {
   if ( !this.tapElement ) {
     return;
   }
@@ -65,13 +65,12 @@ TapListener.prototype.unbindTap = function() {
   delete this.tapElement;
 };
 
-var isPageOffset = window.pageYOffset !== undefined;
 /**
  * pointer up
  * @param {Event} event
  * @param {Event or Touch} pointer
  */
-TapListener.prototype.pointerUp = function( event, pointer ) {
+proto.pointerUp = function( event, pointer ) {
   // ignore emulated mouse up clicks
   if ( this.isIgnoringMouseUp && event.type == 'mouseup' ) {
     return;
@@ -79,9 +78,8 @@ TapListener.prototype.pointerUp = function( event, pointer ) {
 
   var pointerPoint = Unipointer.getPointerPoint( pointer );
   var boundingRect = this.tapElement.getBoundingClientRect();
-  // standard or IE8 scroll positions
-  var scrollX = isPageOffset ? window.pageXOffset : document.body.scrollLeft;
-  var scrollY = isPageOffset ? window.pageYOffset : document.body.scrollTop;
+  var scrollX = window.pageXOffset;
+  var scrollY = window.pageYOffset;
   // calculate if pointer is inside tapElement
   var isInside = pointerPoint.x >= boundingRect.left + scrollX &&
     pointerPoint.x <= boundingRect.right + scrollX &&
@@ -96,13 +94,14 @@ TapListener.prototype.pointerUp = function( event, pointer ) {
   if ( event.type != 'mouseup' ) {
     this.isIgnoringMouseUp = true;
     // reset flag after 300ms
+    var _this = this;
     setTimeout( function() {
-      delete this.isIgnoringMouseUp;
-    }.bind( this ), 320 );
+      delete _this.isIgnoringMouseUp;
+    }, 320 );
   }
 };
 
-TapListener.prototype.destroy = function() {
+proto.destroy = function() {
   this.pointerDone();
   this.unbindTap();
 };

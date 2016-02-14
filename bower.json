@@ -1,9 +1,8 @@
 {
   "name": "tap-listener",
   "main": "tap-listener.js",
-  "version": "1.1.2",
   "dependencies": {
-    "unipointer": "~1.1.0"
+    "unipointer": "^2.1.0"
   },
   "authors": [
     "David DeSandro"
