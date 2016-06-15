@@ -61,7 +61,7 @@ proto.unbindTap = function() {
   if ( !this.tapElement ) {
     return;
   }
-  this._bindStartEvent( this.tapElement, true );
+  this._bindStartEvent( this.tapElement, false );
   delete this.tapElement;
 };
 
