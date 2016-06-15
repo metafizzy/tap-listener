@@ -97,7 +97,7 @@ proto.pointerUp = function( event, pointer ) {
     var _this = this;
     setTimeout( function() {
       delete _this.isIgnoringMouseUp;
-    }, 320 );
+    }, 400 );
   }
 };
 
