@@ -1,3 +1,13 @@
+# Deprecated
+
+TapListener is no longer support and should be avoided. From [ftlabs/fastclick](https://github.com/ftlabs/fastclick)
+
+> As of late 2015 most mobile browsers - notably Chrome and Safari - no longer have a 300ms touch delay, so fastclick offers no benefit on newer browsers, and risks introducing bugs into your application.
+
+Likewise, TapListener is no longer useful. I recommend using standard `click` event.
+
+See [Chrome dev blog - 300ms tap delay, gone away](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away)
+
 # Tap listener
 
 _Listens to taps_
